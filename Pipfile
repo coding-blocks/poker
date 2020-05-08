@@ -10,6 +10,7 @@ django = "*"
 psycopg2 = "*"
 python-decouple = "*"
 python-crontab = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"
