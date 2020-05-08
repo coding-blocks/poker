@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 psycopg2 = "*"
 python-decouple = "*"
+python-crontab = "*"
 
 [requires]
 python_version = "3.6"
