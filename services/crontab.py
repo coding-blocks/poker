@@ -1,12 +1,15 @@
 from crontab import CronTab
 from cron import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from cron.models import Job
 
 class CrontabService:
   def __init__(self):
     self.cron = CronTab(user=True)
   
   def _get_curl_command(self, job):
-    return f'request_curl --url {job.fullURL} --token {job.application.token} --method {job.method} &> /var/log/poker.logs'
+    return f'request_curl --url {job.fullURL} --token {job.application.token} --method {job.method} &>> /var/log/poker.logs'
 
   def createJob(self, dbJob):
     job = self.cron.new(command = self._get_curl_command(dbJob), comment=str(dbJob.id))
@@ -23,3 +26,11 @@ class CrontabService:
     self.cron.write()
     for job in models.Job.objects.all():
       self.createJob(job)
+
+CRON_SERVICE = CrontabService()
+
+@receiver(post_save, sender=Job)
+def print_only_after_deal_created(sender, instance, created, **kwargs):
+  if not created:
+    CRON_SERVICE.removeJob(instance)
+  CRON_SERVICE.createJob(instance)

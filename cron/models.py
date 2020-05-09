@@ -1,14 +1,10 @@
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from services import crontab
 import urllib.parse
 
 METHODS = (
   ('GET', 'GET'),
   ('POST', 'POST')
 )
-CRON_SERVICE = crontab.CrontabService()
 
 # Create your models here.
 class Application(models.Model):
@@ -38,9 +34,3 @@ class Log(models.Model):
   @property
   def isSuccessful(self):
     return (self.statusCode // 100) == 2
-
-@receiver(post_save, sender=Job)
-def print_only_after_deal_created(sender, instance, created, **kwargs):
-  if not created:
-    CRON_SERVICE.removeJob(instance)
-  CRON_SERVICE.createJob(instance)
