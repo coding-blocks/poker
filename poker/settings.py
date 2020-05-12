@@ -4,7 +4,6 @@ from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -15,7 +14,6 @@ SECRET_KEY = ')!#8#yb=tc!#-sr5kidjf4@d0=by794+6fdxcg5r(r0o(k+)1r'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -59,7 +57,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'poker.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -72,7 +69,6 @@ DATABASES = {
         'HOST': config('DB_HOST', default=''),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -92,7 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -106,8 +101,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+ONEAUTH_CLIENT_ID = config('ONEAUTH_CLIENT_ID', default='')
+ONEAUTH_CLIENT_SECRET = config('ONEAUTH_CLIENT_SECRET', default='')
+
+ONEAUTH_USER_INFO_URL = 'https://account.codingblocks.com/api/users/me'
+ONEAUTH_TOKEN_URL = 'https://account.codingblocks.com/oauth/token'
+
+LOGIN_URL = ''
+LOGIN_URL = '/oneauth/login/'
