@@ -63,7 +63,7 @@ python manage.py runserver
 Open `http://localhost:8000/admin` to access admin panel and create jobs with appropriate URLs.
 
 ## Project Structure
-* `cron`: Mainly contains models for job, application and log. A cronjob is created as soon as the object of `Job` is created in the database.
+* `cron`: Django application that stores and handles Cron Jobs in the databases and synchronizes them with the crontab.
 
 * `scripts`: Contains script for making http request to a given URL, request method and authentication token could be specified in the program arguments.
 
@@ -79,7 +79,7 @@ Install docker from [here](https://docs.docker.com/engine/install/ubuntu/)
 
 Make sure that docker is properly installed in your system.
 ```shell script
-sudo docker run hello-world
+docker run hello-world
 ```
 
 ### Building the Docker container
