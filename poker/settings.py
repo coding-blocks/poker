@@ -18,6 +18,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'oneauth',
     'cron',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,5 +113,4 @@ ONEAUTH_CLIENT_SECRET = config('ONEAUTH_CLIENT_SECRET', default='')
 ONEAUTH_USER_INFO_URL = 'https://account.codingblocks.com/api/users/me'
 ONEAUTH_TOKEN_URL = 'https://account.codingblocks.com/oauth/token'
 
-LOGIN_URL = ''
 LOGIN_URL = '/oneauth/login/'

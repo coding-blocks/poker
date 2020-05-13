@@ -1,9 +1,10 @@
-import json
-
 import requests
 from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.models import User, Permission
+from django.db.models import Q
 from django.http import HttpResponse, HttpResponseForbidden, Http404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
 
 
@@ -22,22 +23,44 @@ def callback_view(request):
         if response.status_code != 200:
             return HttpResponseForbidden()
         access_token = response.json()['access_token']
-        user_info = get_user_info(access_token)
-        return HttpResponse(content=json.dumps(user_info), content_type='application/json')
+        user = create_or_update_user_info(access_token)
+        login(request, user)
+        return redirect(reverse('admin:index'))
     raise Http404
 
 
-def get_user_info(access_token):
+def create_or_update_user_info(access_token):
     endpoint = settings.ONEAUTH_USER_INFO_URL
     headers = {
         "Authorization": "Bearer {}".format(access_token)
     }
     response = requests.get(endpoint, headers=headers)
     user_data_json = response.json()
-    return user_data_json
+    defaults = {
+        'username': user_data_json.get('username'),
+        'email': user_data_json.get('verifiedemail') if user_data_json.get('verifiedemail') else user_data_json.get(
+            'email'),
+        'first_name': user_data_json.get('firstname'),
+        'last_name': user_data_json.get('lastname'),
+    }
+
+    user, created = User.objects.update_or_create(username=user_data_json.get('username'), defaults=defaults)
+    if created:
+        # change user permission and staff status only when user is created
+        user.is_staff = True
+        permissions = Permission.objects.filter(Q(codename__istartswith='add') | Q(codename__istartswith='view'),
+                                                content_type__app_label='cron')
+        user.user_permissions.set(permissions)
+        user.save()
+    return user
 
 
 def login_view(request):
-    oneauth_authorization_url = "https://account.codingblocks.com/oauth/authorize?response_type=code&client_id={}&redirect_uri={}".format(
-        settings.ONEAUTH_CLIENT_ID, request.build_absolute_uri(reverse('oneauth_callback_url')))
-    return redirect(oneauth_authorization_url)
+    if request.user.is_authenticated:
+        return redirect(reverse('admin:index'))
+
+    context = {
+        'oneauth_authorization_url': "https://account.codingblocks.com/oauth/authorize?response_type=code&client_id={}&redirect_uri={}".format(
+            settings.ONEAUTH_CLIENT_ID, request.build_absolute_uri(reverse('oneauth_callback_url')))
+    }
+    return render(request, 'login.html', context=context)
