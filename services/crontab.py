@@ -13,7 +13,7 @@ class CrontabService:
         self.cron = CronTab(user=True)
 
     def _get_curl_command(self, job):
-        return f'{sys.executable} {os.path.join(settings.BASE_DIR, "manage.py")} sendrequest --url {job.fullURL} --token {job.application.token} --method {job.method} &>> /var/log/poker.logs'
+        return f'{sys.executable} {os.path.join(settings.BASE_DIR, "manage.py")} sendrequest --job_id {job.id}'
 
     def createJob(self, dbJob):
         job = self.cron.new(command=self._get_curl_command(dbJob), comment=str(dbJob.id))
