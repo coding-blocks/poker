@@ -1,7 +1,8 @@
 import requests
 from django.conf import settings
 from django.contrib.auth import login
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import Permission
+from .models import User
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseForbidden, Http404
 from django.shortcuts import redirect, render
@@ -44,7 +45,7 @@ def create_or_update_user_info(access_token):
         'last_name': user_data_json.get('lastname'),
     }
 
-    user, created = User.objects.update_or_create(username=user_data_json.get('username'), defaults=defaults)
+    user, created = User.objects.update_or_create(email=defaults['username'], defaults=defaults)
     if created:
         # change user permission and staff status only when user is created
         user.is_staff = True

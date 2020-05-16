@@ -114,3 +114,5 @@ ONEAUTH_USER_INFO_URL = 'https://account.codingblocks.com/api/users/me'
 ONEAUTH_TOKEN_URL = 'https://account.codingblocks.com/oauth/token'
 
 LOGIN_URL = '/oneauth/login/'
+
+AUTH_USER_MODEL = 'oneauth.User'
