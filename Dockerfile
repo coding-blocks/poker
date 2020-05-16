@@ -12,6 +12,5 @@ COPY Pipfile.lock Pipfile.lock
 RUN pipenv install --system
 
 COPY . .
-RUN ln -s /usr/src/poker/scripts/request_curl.py /usr/bin/request_curl
 
 ENTRYPOINT [ "./start.sh" ]
