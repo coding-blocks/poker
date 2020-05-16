@@ -3,11 +3,11 @@ from django.urls import path
 from services import crontab
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+  path('admin/', admin.site.urls),
 ]
 
-try: 
-    CRON_SERVICE = crontab.CrontabService()
-    CRON_SERVICE.refreshAllJob()
+try:
+  CRON_SERVICE = crontab.CrontabService()
+  CRON_SERVICE.refreshAllJob()
 except:
-    pass
+  pass
