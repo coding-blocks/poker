@@ -4,4 +4,4 @@ from django.db import models
 
 # Create your models here.
 class User(AbstractUser):
-    email = models.EmailField(unique=True, verbose_name='email address', max_length=255)
+  email = models.EmailField(unique=True, verbose_name='email address', max_length=255)
