@@ -10,8 +10,7 @@ WORKDIR /usr/src/poker
 COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
 RUN pipenv install --system
-COPY nginx.conf /etc/nginx/sites-available/poker
-RUN ln -s /etc/nginx/sites-available/poker /etc/nginx/sites-enabled
+COPY nginx.conf /etc/nginx/conf.d/nginx.conf
 RUN mkdir -p /run/nginx
 
 COPY . .
