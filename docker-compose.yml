@@ -2,7 +2,7 @@ version : '3.2'
 
 services:
   postgres:
-    image: 'postgres:10'
+    image: 'postgres:9.6'
     environment:
       - POSTGRES_USER=poker
       - POSTGRES_PASSWORD=poker
@@ -10,8 +10,8 @@ services:
   cronapi:
     depends_on: 
       - postgres
-    image: 'cb/poker'
+    image: 'codingblocks/poker'
     ports:
       - "8000:8000"
-    env_file: 
-      - '.env'
+#    env_file: 
+#      - '.env'

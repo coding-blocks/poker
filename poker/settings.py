@@ -14,7 +14,7 @@ SECRET_KEY = ')!#8#yb=tc!#-sr5kidjf4@d0=by794+6fdxcg5r(r0o(k+)1r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','192.168.56.27']
+ALLOWED_HOSTS = ['*'] 
 
 
 # Application definition
@@ -111,3 +111,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/usr/src/poker/static/'
