@@ -12,7 +12,6 @@ COPY Pipfile.lock Pipfile.lock
 RUN pipenv install --system
 
 COPY . .
-RUN mkdir -p /run/nginx
 COPY nginx.conf /etc/nginx/conf.d/nginx.conf
 
 ENTRYPOINT [ "./start.sh" ]
