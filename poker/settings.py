@@ -13,7 +13,7 @@ SECRET_KEY = ')!#8#yb=tc!#-sr5kidjf4@d0=by794+6fdxcg5r(r0o(k+)1r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -106,6 +106,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 
 ONEAUTH_CLIENT_ID = config('ONEAUTH_CLIENT_ID', default='')
 ONEAUTH_CLIENT_SECRET = config('ONEAUTH_CLIENT_SECRET', default='')
