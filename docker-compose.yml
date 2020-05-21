@@ -1,4 +1,4 @@
-version : '3.2'
+version: '3.2'
 
 services:
   postgres:
@@ -8,10 +8,10 @@ services:
       - POSTGRES_PASSWORD=poker
       - POSTGRES_DB=poker
   cronapi:
-    depends_on: 
+    depends_on:
       - postgres
     image: 'codingblocks/poker'
     ports:
-      - "8000:8000"
-    env_file: 
+      - "8000:80"
+    env_file:
       - '.env'
