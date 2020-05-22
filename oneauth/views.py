@@ -50,7 +50,6 @@ def create_or_update_user_info(access_token):
     # change user permission and staff status only when user is created
     user.is_staff = True
     permissions = Permission.objects.filter(
-      Q(codename__istartswith='add') | Q(codename__istartswith='view'),
       content_type__app_label='cron'
     )
     user.user_permissions.set(permissions)
