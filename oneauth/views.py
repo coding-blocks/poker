@@ -38,19 +38,21 @@ def create_or_update_user_info(access_token):
   response = requests.get(endpoint, headers=headers)
   user_data_json = response.json()
   defaults = {
+    'oneauth_id': user_data_json.get('id'),
     'username': user_data_json.get('username'),
-    'email': user_data_json.get('verifiedemail') if user_data_json.get('verifiedemail') else user_data_json.get(
-      'email'),
+    'email': user_data_json.get('verifiedemail') if user_data_json.get('verifiedemail') else user_data_json.get('email'),
     'first_name': user_data_json.get('firstname'),
     'last_name': user_data_json.get('lastname'),
   }
 
-  user, created = User.objects.update_or_create(email=defaults['username'], defaults=defaults)
+  user, created = User.objects.update_or_create(oneauth_id=defaults['oneauth_id'], defaults=defaults)
   if created:
     # change user permission and staff status only when user is created
     user.is_staff = True
-    permissions = Permission.objects.filter(Q(codename__istartswith='add') | Q(codename__istartswith='view'),
-                                            content_type__app_label='cron')
+    permissions = Permission.objects.filter(
+      Q(codename__istartswith='add') | Q(codename__istartswith='view'),
+      content_type__app_label='cron'
+    )
     user.user_permissions.set(permissions)
     user.save()
   return user

@@ -5,3 +5,4 @@ from django.db import models
 # Create your models here.
 class User(AbstractUser):
   email = models.EmailField(unique=True, verbose_name='email address', max_length=255)
+  oneauth_id = models.BigIntegerField(unique=True, null=True, blank=False)
