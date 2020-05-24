@@ -1,6 +1,8 @@
 from django.db import models
 import urllib.parse
 
+from django.utils import timezone
+
 METHODS = (
   ('GET', 'GET'),
   ('POST', 'POST')
@@ -33,11 +35,13 @@ class Job(models.Model):
   def __str__(self):
     return self.name
 
+
 class Log(models.Model):
   id = models.AutoField(primary_key=True)
   job = models.ForeignKey(Job, on_delete=models.CASCADE)
   statusCode = models.IntegerField()
   response = models.TextField()
+  created_at = models.DateTimeField(default=timezone.now)
 
   @property
   def isSuccessful(self):
