@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'cron/partials/navbar.html' %}
+    <h1>{{ job.name }}</h1>
+    <button>Execute Now</button>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">Success Rate</h3>
+            <p class="card-text">{{ success_rate }}</p>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">Number of Requests sent</h3>
+            <p class="card-text">{{ job.log_set.count }}</p>
+        </div>
+    </div>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">Job URL</h3>
+            <p class="card-text">{{ job.fullURL }}</p>
+        </div>
+    </div>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Status Code</th>
+            <th scope="col">Response</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in object_list.all %}
+            <tr>
+                <th scope="row">{{ log.id }}</th>
+                <td>{{ log.statusCode }}</td>
+                <td>{{ log.response|truncatechars:50 }}</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
