@@ -1,0 +1,51 @@
+{% load static %}
+<nav class="navbar navbar-light navbar-expand-lg bg-light">
+  <a class="navbar-brand" href="/admin">
+    <img src="{% static "cron/img/nav-logo.png" %}" height="30" alt="Coding Blocks Logo">
+    <span class="small">Coding Blocks</span>
+    |
+    <span class="text-danger small">Poker</span>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarRight" aria-controls="navbarRight" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarRight">
+    <ul class="navbar-nav mr-auto">
+      {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a href="/admin" class="nav-link">Manage Crons</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="shortLinksMenu" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Monitor
+          </a>
+          <div class="dropdown-menu" aria-labelledby="shortLinksMenu">
+            <a class="dropdown-item" href="#">Applications</a>
+            <a class="dropdown-item" href="#">Jobs</a>
+          </div>
+        </li>
+      {% endif %}
+    </ul>
+    <ul class="navbar-nav ml-auto mr-4">
+      <li class="nav-item">
+        <a href="https://codingblocks.com" class="nav-link">Classroom Courses</a>
+      </li>
+      <li class="nav-item mr-4">
+        <a href="https://online.codingblocks.com" class="nav-link">Online Courses</a>
+      </li>
+      {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a href="https://account.codingblocks.com" class="nav-link">😎 Profile</a>
+        </li>
+        <li class="nav-item">
+          <a href="/admin/logout" class="nav-link">🔓 Logout</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a href="/admin/login" class="nav-link">🔐 Login</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>

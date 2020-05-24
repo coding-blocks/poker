@@ -7,6 +7,7 @@ urlpatterns = [
   path('admin/login/', login_view),
   path('admin/', admin.site.urls),
   path('oneauth/', include('oneauth.urls')),
+  path('', include('cron.urls'))
 ]
 
 try:
