@@ -1,7 +1,6 @@
 from django.db import models
 import urllib.parse
 
-from django.utils import timezone
 
 METHODS = (
   ('GET', 'GET'),
