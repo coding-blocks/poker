@@ -2,4 +2,26 @@
 
 {% block content %}
   {% include 'cron/partials/navbar.html' %}
+
+  <div class="container my-4">
+    <div class="jumbotron">
+      <h1 class="display-4">
+        Crons Made Easy!
+      </h1>
+      <p class="lead">
+        Welcome to <strong class="text-primary h3">Poker</strong>,
+        the cron over HTTP service
+        - made with ❤️ by
+        <a class="text-black-50" href="https://codingblocks.com">Coding Blocks</a>
+      </p>
+      <hr class="my-4">
+      <p>
+        Managing and monitoring cron should not be the concern of the application and hence Poker is aimed at managing intra organization cron jobs by executing them over a HTTP request.
+
+      </p>
+      <a class="btn btn-outline-primary btn-lg" href="/admin" role="button">
+        Manage Crons
+      </a>
+    </div>
+  </div>
 {% endblock %}
