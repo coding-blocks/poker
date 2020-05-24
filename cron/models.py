@@ -30,8 +30,13 @@ class Job(models.Model):
   def fullURL(self):
     return urllib.parse.urljoin(self.application.callbackURL, self.endpoint)
 
+  @property
+  def lastExecutionResult(self):
+    return self.log_set.last().statusCode
+
   def __str__(self):
     return self.name
+
 
 class Log(models.Model):
   id = models.AutoField(primary_key=True)
