@@ -1,6 +1,7 @@
 from django.db import models
 import urllib.parse
 
+
 METHODS = (
   ('GET', 'GET'),
   ('POST', 'POST')
@@ -30,14 +31,20 @@ class Job(models.Model):
   def fullURL(self):
     return urllib.parse.urljoin(self.application.callbackURL, self.endpoint)
 
+  @property
+  def lastExecutionResult(self):
+    return self.log_set.last().statusCode
+
   def __str__(self):
     return self.name
+
 
 class Log(models.Model):
   id = models.AutoField(primary_key=True)
   job = models.ForeignKey(Job, on_delete=models.CASCADE)
   statusCode = models.IntegerField()
   response = models.TextField()
+  created_at = models.DateTimeField(auto_now_add=True)
 
   @property
   def isSuccessful(self):
