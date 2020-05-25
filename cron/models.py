@@ -33,7 +33,8 @@ class Job(models.Model):
 
   @property
   def lastExecutionResult(self):
-    return self.log_set.last().statusCode
+    lastExecuted = self.log_set.last()
+    return lastExecuted.statusCode if lastExecuted else None
 
   def __str__(self):
     return self.name
