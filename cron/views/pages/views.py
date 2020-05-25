@@ -19,7 +19,7 @@ class ApplicationDetailView(generic.DetailView, MultipleObjectMixin):
     return context
 
 
-class JobDetailView(MultipleObjectMixin, generic.DetailView):
+class JobDetailView(generic.DetailView, MultipleObjectMixin):
   model = Job
   paginate_by = 10
 
