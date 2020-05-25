@@ -28,6 +28,7 @@ class JobDetailView(generic.DetailView, MultipleObjectMixin):
     object_list = log_queryset.order_by('pk')
     success_count = log_queryset.filter(response__range=(200, 299)).count()
     total_count = log_queryset.count()
+    success_rate = success_count / total_count * 100 if total_count != 0 else 100.0
     context = super(JobDetailView, self).get_context_data(object_list=object_list,
-                                                          success_rate=success_count / total_count * 100, **kwargs)
+                                                          success_rate=success_rate, **kwargs)
     return context

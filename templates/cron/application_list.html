@@ -2,46 +2,54 @@
 
 {% block content %}
     {% include 'cron/partials/navbar.html' %}
-    <h1>Applications</h1>
-    <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; First</a>
-            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
+    <div class="container pt-3">
+        <h1>Applications</h1>
+        <nav aria-label="Page navigation" class="">
+            <ul class="pagination justify-content-end flex-wrap">
+                <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                    <a class="page-link" href="?page=1" tabindex="-1">&laquo;First</a></li>
+                <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}"><a class="page-link"
+                        {% if page_obj.has_previous %} href="?page={{ page_obj.previous_page_number }}"{% endif %}
+                                                                                               tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" tabindex="-1">
+                        {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }}
+                    </a>
+                </li>
+                <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}"><a class="page-link"
+                        {% if page_obj.has_next %}
+                                                                                           href="?page={{ page_obj.next_page_number }}"{% endif %}>Next</a>
+                <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}"><a class="page-link"
+                                                                                           href="?page={{ page_obj.paginator.num_pages }}">Last
+                    &raquo;</a>
+                </li>
+            </ul>
+        </nav>
 
-        <span class="current">
-            {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ paginator.count }}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-        {% endif %}
-    </span>
-    </div>
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Number of Jobs</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for application in application_list %}
+        <table class="table table-striped">
+            <thead class="table-secondary">
             <tr>
-                <th scope="row">{{ application.id }}</th>
-                <td>{{ application.name }}</td>
-                <td>{{ application.job_set.count }}</td>
-                <td>
-                    <button type="button" class="btn btn-success">View</button>
-                </td>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Number of Jobs</th>
+                <th scope="col">Actions</th>
             </tr>
+            </thead>
+            <tbody>
+            {% for application in application_list %}
+                <tr>
+                    <th scope="row">{{ application.id }}</th>
+                    <td>{{ application.name }}</td>
+                    <td>{{ application.job_set.count }}</td>
+                    <td>
+                        <a role="button" class="btn btn-success active"
+                           href="/application/{{ application.id }}/">View</a>
+                    </td>
+                </tr>
 
-        {% endfor %}
-        </tbody>
-    </table>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
