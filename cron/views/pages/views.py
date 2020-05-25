@@ -15,20 +15,20 @@ class ApplicationDetailView(generic.DetailView, MultipleObjectMixin):
 
   def get_context_data(self, **kwargs):
     object_list = self.get_object().job_set.order_by('pk')
-    context = super(ApplicationDetailView, self).get_context_data(object_list=object_list, **kwargs)
+    context = super().get_context_data(object_list=object_list, **kwargs)
     return context
 
 
-class JobDetailView(generic.DetailView, MultipleObjectMixin):
+class JobDetailView(MultipleObjectMixin, generic.DetailView):
   model = Job
   paginate_by = 10
 
   def get_context_data(self, **kwargs):
     log_queryset = self.get_object().log_set
-    object_list = log_queryset.order_by('pk')
+    object_list = log_queryset.order_by('-created_at')
     success_count = log_queryset.filter(response__range=(200, 299)).count()
     total_count = log_queryset.count()
     success_rate = success_count / total_count * 100 if total_count != 0 else 100.0
-    context = super(JobDetailView, self).get_context_data(object_list=object_list,
-                                                          success_rate=success_rate, **kwargs)
+    context = super().get_context_data(object_list=object_list,
+                                       success_rate=success_rate, **kwargs)
     return context
