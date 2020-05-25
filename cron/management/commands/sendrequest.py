@@ -19,4 +19,3 @@ class Command(BaseCommand):
     request = requests.Request(job.method, job.fullURL, headers=headers).prepare()
     response = session.send(request)
     Log.objects.create(job=job, statusCode=response.status_code, response=response.text)
-    self.stdout.write(response.text)
