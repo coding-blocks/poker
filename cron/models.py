@@ -1,6 +1,7 @@
 from django.db import models
 import urllib.parse
 
+
 METHODS = (
   ('GET', 'GET'),
   ('POST', 'POST')
@@ -43,6 +44,7 @@ class Log(models.Model):
   job = models.ForeignKey(Job, on_delete=models.CASCADE)
   statusCode = models.IntegerField()
   response = models.TextField()
+  created_at = models.DateTimeField(auto_now_add=True)
 
   @property
   def isSuccessful(self):
