@@ -1,6 +1,6 @@
 import requests
 from django.core.management import BaseCommand
-
+from requests.exceptions import ConnectionError
 from cron.models import Log, Job
 
 
@@ -17,5 +17,8 @@ class Command(BaseCommand):
     }
     session = requests.Session()
     request = requests.Request(job.method, job.fullURL, headers=headers).prepare()
-    response = session.send(request)
-    Log.objects.create(job=job, statusCode=response.status_code, response=response.text)
+    try:
+      response = session.send(request)
+      Log.objects.create(job=job, statusCode=response.status_code, response=response.text)
+    except ConnectionError:
+      self.stderr.write('connection error')

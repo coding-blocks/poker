@@ -12,4 +12,4 @@ python-decouple = "*"
 python-crontab = "*"
 requests = "*"
 gunicorn = "*"
-
+djangorestframework = "*"

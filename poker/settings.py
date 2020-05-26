@@ -20,6 +20,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default = '*').split(',')
 INSTALLED_APPS = [
     'oneauth',
     'cron',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
