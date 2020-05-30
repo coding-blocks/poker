@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'cron/partials/navbar.html' %}
+    <div aria-live="polite" aria-atomic="true" style="position: relative;">
+        <div class="toast" id="myToast" style="position: absolute; top: 0; right: 0;">
+            <div class="toast-header">
+                <strong class="mr-auto"><i class="fa fa-grav"></i> Job executed sucessfully!</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-sm-9 col-6">
+                <h1>{{ job.name }}</h1>
+            </div>
+            <div class="col-sm-3 col-6">
+                <button type="button" class="btn btn-warning" id="execute">
+                    <span id="loader" class="spinner-border spinner-border-sm text-primary" role="status"
+                          aria-hidden="true" style="display: none;"></span>
+                    <span id="button-text">Execute Now</span>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h3 class="card-title">Success Rate</h3>
+                        <p class="card-text">{{ success_rate }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h3 class="card-title">Number of Requests sent</h3>
+                        <p class="card-text">{{ job.log_set.count }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h3 class="card-title">Job URL</h3>
+                        <p class="card-text">{{ job.fullURL }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {% include 'cron/partials/pagination.html' %}
+
+        <table class="table table-striped">
+            <thead class="table-secondary">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">
+
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           style="text-decoration:none" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            Status Code
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{{ request.path }}">All</a>
+                            <a class="dropdown-item" href="?status=200">200</a>
+                            <a class="dropdown-item" href="?status=400">400</a>
+                            <a class="dropdown-item" href="?status=404">404</a>
+                            <a class="dropdown-item" href="?status=500">500</a>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">Response</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for log in object_list.all %}
+                <tr>
+                    <th scope="row">{{ log.id }}</th>
+                    <td>{{ log.statusCode }}</td>
+                    <td>{{ log.response|truncatechars:50 }}</td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {% load static %}
+    <script src='{% static "cron/js/ajax-setup.js" %}'></script>
+    <script src='{% static "cron/js/execute-job.js" %}'></script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% include 'cron/partials/navbar.html' %}
+    <div class="container pt-3">
+        <h1>{{ application.name }} Jobs</h1>
+        {% include 'cron/partials/pagination.html' %}
+        <table class="table table-striped">
+            <thead class="table-secondary">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last Response</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for job in object_list.all %}
+                <tr>
+                    <th scope="row">{{ job.id }}</th>
+                    <td>{{ job.name }}</td>
+                    <td>{{ job.log_set.last.statusCode }}</td>
+                    <td>
+                        <a role="button" class="btn btn-success active"
+                           href="/jobs/{{ job.id }}/">View</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="container">
+
+{% endblock %}
