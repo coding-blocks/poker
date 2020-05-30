@@ -59,7 +59,24 @@
             <thead class="table-secondary">
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Status Code</th>
+                <th scope="col">
+
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           style="text-decoration:none" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            Status Code
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{{ request.path }}">All</a>
+                            <a class="dropdown-item" href="?status=200">200</a>
+                            <a class="dropdown-item" href="?status=400">400</a>
+                            <a class="dropdown-item" href="?status=404">404</a>
+                            <a class="dropdown-item" href="?status=500">500</a>
+                        </div>
+                    </div>
+                </th>
                 <th scope="col">Response</th>
             </tr>
             </thead>

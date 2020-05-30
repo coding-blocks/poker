@@ -25,7 +25,15 @@ class JobDetailView(generic.DetailView, MultipleObjectMixin):
 
   def get_context_data(self, **kwargs):
     log_queryset = self.get_object().log_set
-    object_list = log_queryset.order_by('-created_at')
+    object_list = log_queryset.all()
+    status = self.request.GET.get('status')
+    if status:
+      object_list = object_list.filter(statusCode=status)
+    created_at = self.request.GET.get('created_at')
+    if created_at:
+      object_list = object_list.filter(created_at=created_at)
+
+    object_list = object_list.order_by('-created_at')
     success_count = log_queryset.filter(response__range=(200, 299)).count()
     total_count = log_queryset.count()
     success_rate = success_count / total_count * 100 if total_count != 0 else 100.0
