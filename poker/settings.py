@@ -123,3 +123,5 @@ ONEAUTH_TOKEN_URL = 'https://account.codingblocks.com/oauth/token'
 LOGIN_URL = '/oneauth/login/'
 
 AUTH_USER_MODEL = 'oneauth.User'
+
+CELERY_BROKER_URL = config('CELERY_BROKER_URL')
