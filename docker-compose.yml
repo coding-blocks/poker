@@ -1,6 +1,12 @@
 version: '3.2'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: poker
+      RABBITMQ_DEFAULT_PASS: poker
   postgres:
     image: 'postgres:9.6'
     environment:
@@ -11,8 +17,9 @@ services:
     build: .
     depends_on:
       - postgres
+      - rabbitmq
     image: 'codingblocks/poker'
     ports:
-      - "8000:80"
+      - "8080:80"
     env_file:
       - '.env'

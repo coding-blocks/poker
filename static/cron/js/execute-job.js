@@ -1,8 +1,9 @@
 $("#execute").click(function (e) {
     e.preventDefault();
+    job_id = window.location.href.split('/').slice(-2, -1)[0];
     $.ajax({
         type: "POST",
-        url: "/api/job/execute/8/",
+        url: `/api/job/execute/${job_id}/`,
         data: {
             id: $(this).val(), // < note use of 'this' here
             access_token: $("#access_token").val()
