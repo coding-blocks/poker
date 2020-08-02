@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
-from django.core.management import call_command
 
 from cron import models
+from cron.tasks import execute_job
 
 
 # Register your models here.
@@ -12,7 +12,7 @@ class JobAdmin(admin.ModelAdmin):
 
   def execute_now(self, request, queryset):
     for query in queryset:
-      call_command('sendrequest', job_id=query.id)
+      execute_job.delay(query.id)
       self.message_user(request, f'successfully executed job {query.name}', messages.SUCCESS)
 
 
