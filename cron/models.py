@@ -26,9 +26,11 @@ class Job(models.Model):
   method = models.CharField(max_length=10, choices=METHODS)
   endpoint = models.CharField(max_length=1024)
   timeExpression = models.CharField(max_length=1024)
+  isPaused = models.BooleanField(default=False)
 
   @property
   def fullURL(self):
+    print(self.application.callbackURL)
     return urllib.parse.urljoin(self.application.callbackURL, self.endpoint)
 
   @property
