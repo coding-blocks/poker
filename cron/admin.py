@@ -8,7 +8,7 @@ from cron.tasks import execute_job
 @admin.register(models.Job)
 class JobAdmin(admin.ModelAdmin):
   actions = ['execute_now']
-  list_display = ['name', 'application', 'method', 'endpoint', 'timeExpression', 'lastExecutionResult']
+  list_display = ['name', 'application', 'method', 'endpoint', 'timeExpression', 'lastExecutionResult', 'isPaused']
 
   def execute_now(self, request, queryset):
     for query in queryset:
